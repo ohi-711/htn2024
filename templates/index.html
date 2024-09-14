@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hack the North 2024</title>
+    <title>Hack the North 2024 - Project Name</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -25,13 +25,13 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-        h1 {
+        h1, h2 {
             color: #333;
             text-align: center;
             margin-bottom: 30px;
             font-weight: 600;
         }
-        #response, #scriptOutput {
+        #response, #scriptOutput, #marketingOutput {
             margin-top: 20px;
             padding: 20px;
             background-color: #f0f0f0;
@@ -77,30 +77,45 @@
             color: #666;
             text-align: center;
         }
-
         .center-button {
             display: flex;
             justify-content: center;
+        }
+        #generatedImage {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hack the North 2024 - Project Name</h1>
-        <p>Enter your message below and click the button to get a response.</p>
+        <h1>BrandReach</h1>
+
+        <h2>Marketing Generator</h2>
+        <p>Enter your brand name and description to generate a marketing caption and image.</p>
         <div class="input-group">
-            <input type="text" id="userMessage" placeholder="Enter your message here">
-            <button onclick="getResponse()">Get Response</button>
+            <input type="text" id="brandInput" placeholder="Enter your brand name and description">
+            <button onclick="generateMarketing()">Generate Marketing</button>
         </div>
-        <div id="response">
-            <p>Response will appear here...</p>
+        <div id="marketingOutput">
+            <p>Generated caption will appear here...</p>
         </div>
-        <div class="center-button">
-            <button onclick="runPythonScript()">Run Python Script</button>
+        <div id="imageContainer">
+            <div class="center-button">
+                <img id="generatedImage" src="" alt="Generated marketing image" style="display: none;">
+            </div>
         </div>
-        <div id="scriptOutput">
-            <p>Python script output will appear here...</p>
-        </div>
+
+        <div>
+            <div class="center-button">
+                <button onclick="runPythonScript()">Post on Twitter</button>
+            </div>
+            <div id="scriptOutput">
+                <p>Result will appear here...</p>
+            </div>
+        </div> 
     </div>
 
     <script>
@@ -134,6 +149,28 @@
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('scriptOutput').innerHTML = '<p>Error running Python script</p>';
+            });
+        }
+
+        function generateMarketing() {
+            const brandInput = document.getElementById('brandInput').value;
+            fetch('/generate_marketing', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ brand_name: brandInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('marketingOutput').innerHTML = `<p>${data.caption}</p>`;
+                const img = document.getElementById('generatedImage');
+                img.src = data.image_url;
+                img.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('marketingOutput').innerHTML = '<p>Error generating marketing content</p>';
             });
         }
     </script>
