@@ -15,7 +15,7 @@ except Exception as e:
 
 # Post the tweet
 try:
-    client.create_tweet(text="Hello World1")
+    client.create_tweet(text=":yum:")
     print("Tweet posted successfully!")
 except Exception as e:
     print(f"Error posting tweet: {e}")

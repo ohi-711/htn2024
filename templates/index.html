@@ -31,7 +31,7 @@
             margin-bottom: 30px;
             font-weight: 600;
         }
-        #response {
+        #response, #scriptOutput {
             margin-top: 20px;
             padding: 20px;
             background-color: #f0f0f0;
@@ -90,6 +90,10 @@
         <div id="response">
             <p>Response will appear here...</p>
         </div>
+        <button onclick="runPythonScript()">Run Python Script</button>
+        <div id="scriptOutput">
+            <p>Python script output will appear here...</p>
+        </div>
     </div>
 
     <script>
@@ -109,6 +113,20 @@
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('response').innerHTML = '<p>Error fetching response</p>';
+            });
+        }
+
+        function runPythonScript() {
+            fetch('/run_script', {
+                method: 'POST',
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('scriptOutput').innerHTML = `<p>${data.output}</p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('scriptOutput').innerHTML = '<p>Error running Python script</p>';
             });
         }
     </script>
