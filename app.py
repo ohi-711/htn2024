@@ -4,6 +4,10 @@ import cohere
 app = Flask(__name__)
 
 @app.route('/')
+def main():
+    return render_template('main.html')
+
+@app.route('/chat')
 def index():
     return render_template('index.html')
 
