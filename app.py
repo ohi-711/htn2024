@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 import cohere
 
 app = Flask(__name__)
@@ -7,10 +7,11 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/get_response')
+@app.route('/get_response', methods=['POST'])
 def get_response():
+    user_message = request.json['message']
     co = cohere.Client("ArnEDE2bVtFU63oba6ErCIGAmqnQ7I5rAEByHYAF")
-    response = co.chat(message="hello world!")
+    response = co.chat(message=user_message)
     return jsonify({"text": response.text})
 
 if __name__ == '__main__':

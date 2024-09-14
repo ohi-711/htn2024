@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cohere Chat API Demo</title>
+    <title>Hack the North 2024</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,7 +33,7 @@
             background-color: #4CAF50;
             border: none;
             color: white;
-            padding: 15px 32px;
+            padding: 10px 20px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
@@ -42,29 +42,44 @@
             cursor: pointer;
             border-radius: 5px;
         }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Cohere Chat API Demo</h1>
-        <p>Click the button below to get a response from the Cohere Chat API.</p>
+        <h1>Hack the North 2024 - Project Name here</h1>
+        <p>Enter your message below and click the button to get a response.</p>
+        <input type="text" id="userMessage" placeholder="Enter your message here">
         <button onclick="getResponse()">Get Response</button>
         <div id="response">
-            <p>API response will appear here...</p>
+            <p>Response will appear here...</p>
         </div>
     </div>
 
     <script>
         function getResponse() {
-            fetch('/get_response')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('response').innerHTML = `<p>${data.text}</p>`;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('response').innerHTML = '<p>Error fetching response</p>';
-                });
+            const userMessage = document.getElementById('userMessage').value;
+            fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerHTML = `<p>${data.text}</p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('response').innerHTML = '<p>Error fetching response</p>';
+            });
         }
     </script>
 </body>
