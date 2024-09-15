@@ -19,7 +19,16 @@ def get_response():
     response = f"You said: {data['message']}"
     return jsonify({"text": response})
 
-
+@app.route('/run_script', methods=['POST'])
+def run_script():
+    try:
+        data = request.json
+        tweet = data['message']
+        result = subprocess.run(['python', 'automate_post.py', tweet], capture_output=True, text=True, check=True)
+        output = result.stdout
+        return jsonify({"output": output})
+    except subprocess.CalledProcessError as e:
+        return jsonify({"error": str(e), "output": e.output}), 500
 
 @app.route('/generate_marketing', methods=['POST'])
 def generate_marketing():

@@ -137,10 +137,14 @@
                 document.getElementById('response').innerHTML = '<p>Error fetching response</p>';
             });
         }
-
+        
         function runPythonScript() {
             fetch('/run_script', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: document.getElementById('marketingOutput').querySelector('p').innerHTML }),
             })
             .then(response => response.json())
             .then(data => {
