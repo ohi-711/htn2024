@@ -30,6 +30,8 @@ def run_script():
         return jsonify({"output": output})
     except subprocess.CalledProcessError as e:
         return jsonify({"error": str(e), "output": e.output}), 500
+    except e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/generate_marketing', methods=['POST'])
 def generate_marketing():
