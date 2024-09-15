@@ -1,4 +1,5 @@
 import tweepy
+import sys
 
 # Step 1: Set up your API keys and tokens (replace with your actual keys)
 API_KEY = "HtEF6GqyfgJQjmEBYXuvZCPlr"
@@ -24,7 +25,7 @@ except Exception as e:
 media_path = './danheng7.jpg'
 media = v1_client.media_upload(filename=media_path)
 media_id = media.media_id
-tweet = "danhenglol"
+tweet = sys.argv[1]
 
 # Post the tweet
 try:

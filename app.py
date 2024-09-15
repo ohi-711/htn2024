@@ -19,14 +19,7 @@ def get_response():
     response = f"You said: {data['message']}"
     return jsonify({"text": response})
 
-@app.route('/run_script', methods=['POST'])
-def run_script():
-    try:
-        result = subprocess.run(['python', 'automate_post.py'], capture_output=True, text=True, check=True)
-        output = result.stdout
-        return jsonify({"output": output})
-    except subprocess.CalledProcessError as e:
-        return jsonify({"error": str(e), "output": e.output}), 500
+
 
 @app.route('/generate_marketing', methods=['POST'])
 def generate_marketing():
@@ -75,5 +68,15 @@ def generate_marketing():
         "image_url": image_url
     })
 
+@app.route('/run_script', methods=['POST'])
+def run_script():
+    try:
+        result = subprocess.run(['python', 'automate_post.py', 'testing'], capture_output=True, text=True, check=True)
+        output = result.stdout
+        return jsonify({"output": output})
+    except subprocess.CalledProcessError as e:
+        print(e)
+        return jsonify({"error": str(e), "output": e.output}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)
