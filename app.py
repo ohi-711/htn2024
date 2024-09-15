@@ -22,6 +22,10 @@ def get_response():
 @app.route('/run_script', methods=['POST'])
 def run_script():
     try:
+        data = request.json
+        print(data)
+        tweet = data['message']
+        print(tweet)
         result = subprocess.run(['python', 'automate_post.py'], capture_output=True, text=True, check=True)
         output = result.stdout
         return jsonify({"output": output})
