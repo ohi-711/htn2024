@@ -1,5 +1,7 @@
 import tweepy
 import sys
+import requests
+from io import BytesIO
 
 # Step 1: Set up your API keys and tokens (replace with your actual keys)
 API_KEY = "HtEF6GqyfgJQjmEBYXuvZCPlr"
@@ -22,14 +24,17 @@ except Exception as e:
     print(f"Error during authentication: {e}")
 
 #hardcoded image path + tweet content
-media_path = './danheng7.jpg'
-media = v1_client.media_upload(filename=media_path)
-media_id = media.media_id
+image_url = sys.argv[2]
+response = requests.get(image_url)
+image_data = BytesIO(response.content)
+media = v1_client.media_upload(filename="image.jpg", file=image_data)
+#media = v1_client.media_upload(filename=image_url)
+#media_id = media.media_id
 tweet = sys.argv[1]
 
 # Post the tweet
 try:
-    v2_client.create_tweet(text=tweet, media_ids=[media_id])
+    v2_client.create_tweet(text=tweet, media_ids=[media.media_id_string])
     print("Tweet posted successfully!")
 except Exception as e:
     print(f"Error posting tweet: {e}")

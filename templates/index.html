@@ -144,7 +144,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: document.getElementById('marketingOutput').querySelector('p').innerHTML }),
+                body: JSON.stringify({ message: document.getElementById('marketingOutput').querySelector('p').innerHTML, img_url: document.getElementById('generatedImage').src }),
             })
             .then(response => response.json())
             .then(data => {
