@@ -7,7 +7,7 @@ import json
 app = Flask(__name__)
 
 cohere_api_key = 'ArnEDE2bVtFU63oba6ErCIGAmqnQ7I5rAEByHYAF'
-modelslab_api_key = "dGTe7swTQD12cR23zqyO7CF8kjAJfWtOUxETpTXMNZT832nKTj0CcWhunXAf"
+modelslab_api_key = "38Ty6wAlEN4tLDvdx5nFNxvCrvtgHglfWxbvfmp9aNmrdAKF8zVzGJXjaSGH"
 
 @app.route('/')
 def index():
@@ -24,7 +24,8 @@ def run_script():
     try:
         data = request.json
         tweet = data['message']
-        result = subprocess.run(['python', 'automate_post.py', tweet], capture_output=True, text=True, check=True)
+        image_url = data['image_url']
+        result = subprocess.run(['python', 'automate_post.py', tweet, image_url], capture_output=True, text=True, check=True)
         output = result.stdout
         return jsonify({"output": output})
     except subprocess.CalledProcessError as e:
