@@ -7,7 +7,7 @@ import json
 app = Flask(__name__)
 
 cohere_api_key = 'ArnEDE2bVtFU63oba6ErCIGAmqnQ7I5rAEByHYAF'
-modelslab_api_key = "38Ty6wAlEN4tLDvdx5nFNxvCrvtgHglfWxbvfmp9aNmrdAKF8zVzGJXjaSGH"
+modelslab_api_key = "Sd9hNevezkZmDtuTqeVpwnWYMEI4JxquSSD48iS5xK4BPBff33RCu3aecqPX"
 
 @app.route('/')
 def index():
